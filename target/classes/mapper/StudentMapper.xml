@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.warrior.mapper.StudentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.warrior.entity.Student">
+        <id column="user_id" property="id"/>
+        <result column="user_name" property="stuName"/>
+        <result column="password" property="stuNumber"/>
+        <result column="gender" property="age"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        user.id as user_id,
+        user.stuName as user_name
+    </sql>
+
+    <!-- 填写数据库里实例Person对应的表的表名 -->
+    <!-- 这里是作为一个变量使用 -->
+    <sql id="table">user</sql>
+
+    <select id="selectStudentByStuName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select * from
+        <include refid="table"/>
+        where user_name=#{name}
+    </select>
+
+    <insert id="insertUser" parameterType="com.warrior.entity.Student">
+        insert into
+        <include refid="table"/>
+        (user_name,password,gender)
+        VALUES
+        (#{stuName},#{stuNumber},#{age})
+    </insert>
+</mapper>
